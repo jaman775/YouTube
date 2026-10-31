@@ -57,7 +57,7 @@ enum class PlayerDialog {
     QUALITY, SPEED, AUDIO, SUBTITLES, RESIZE, SUBTITLE_STYLE, INFO, SPONSOR_SEGMENTS,
     CAST,
     // Actions handled directly by the screen
-    AUDIO_ONLY, PIP, SHARE, CLOSE_PLAYER, QUEUE,
+    AUDIO_ONLY, PIP, SHARE, CLOSE_PLAYER, QUEUE, DOWNLOAD,
 }
 
 fun formatTime(ms: Long): String {
@@ -160,7 +160,7 @@ fun PlayerControls(
                     Icon(Icons.Filled.MoreVert, stringResource(R.string.more_options), tint = Color.White)
                 }
                 DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                    val entries = listOf(
+                    val base: List<Pair<PlayerDialog, Int>> = listOf(
                         PlayerDialog.QUALITY to R.string.quality,
                         PlayerDialog.SPEED to R.string.playback_speed,
                         PlayerDialog.AUDIO to R.string.audio_track,
@@ -173,9 +173,13 @@ fun PlayerControls(
                         PlayerDialog.DOWNLOAD to R.string.dl_download,
                         PlayerDialog.INFO to R.string.info,
                         PlayerDialog.CLOSE_PLAYER to R.string.close_player,
-                    ).let { base ->
-                        if (model.pipAvailable) base.take(base.size - 1) + (PlayerDialog.PIP to R.string.pip_enter) + base.last() else base
-                    }
+                    )
+                    val entries: List<Pair<PlayerDialog, Int>> =
+                        if (model.pipAvailable) {
+                            base.dropLast(1) + (PlayerDialog.PIP to R.string.pip_enter) + base.last()
+                        } else {
+                            base
+                        }
                     entries.forEach { (dialog, label) ->
                         DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { menuOpen = false; onOpenDialog(dialog) })
                     }
