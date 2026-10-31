@@ -67,13 +67,13 @@ fun QueueSheet(hub: PlaybackHub, onDismiss: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.queue), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 Text(stringResource(R.string.queue_autoplay), modifier = Modifier.padding(end = 8.dp))
-                Switch(checked = hub.autoplay, onCheckedChange = { hub.setAutoplay(it) })
+                Switch(checked = hub.autoplay, onCheckedChange = { hub.updateAutoplay(it) })
             }
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 EndMode.entries.forEach { mode ->
                     FilterChip(
                         selected = hub.endMode == mode,
-                        onClick = { hub.setEndMode(mode) },
+                        onClick = { hub.updateEndMode(mode) },
                         label = { Text(stringResource(endModeLabel(mode)), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     )
                 }

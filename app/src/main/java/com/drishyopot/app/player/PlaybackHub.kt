@@ -358,12 +358,12 @@ class PlaybackHub(private val app: Application, private val settings: SettingsSt
 
     // ---- Modes ---------------------------------------------------------------
 
-    fun setEndMode(mode: EndMode) { endMode = mode; prefs.endMode = mode; applyEndMode() }
-    fun setAutoplay(on: Boolean) { autoplay = on; prefs.autoplay = on; applyEndMode() }
+    fun updateEndMode(mode: EndMode) { endMode = mode; prefs.endMode = mode; applyEndMode() }
+    fun updateAutoplay(on: Boolean) { autoplay = on; prefs.autoplay = on; applyEndMode() }
 
     fun cycleEndMode(): EndMode {
         val next = EndMode.entries[(endMode.ordinal + 1) % EndMode.entries.size]
-        setEndMode(next)
+        updateEndMode(next)
         return next
     }
 
@@ -377,7 +377,7 @@ class PlaybackHub(private val app: Application, private val settings: SettingsSt
         player.pauseAtEndOfMediaItems = endMode == EndMode.PAUSE || !autoplay
     }
 
-    fun setAudioOnly(on: Boolean) { audioOnly = on; prefs.audioOnly = on; applyAudioOnly() }
+    fun updateAudioOnly(on: Boolean) { audioOnly = on; prefs.audioOnly = on; applyAudioOnly() }
 
     private fun applyAudioOnly() {
         player.trackSelectionParameters = player.trackSelectionParameters.buildUpon()

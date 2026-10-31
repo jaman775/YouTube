@@ -477,7 +477,7 @@ fun PlayerScreen(hub: PlaybackHub, store: SettingsStore, onBack: () -> Unit) {
                     onCycleEndMode = { showHud(context.getString(endModeLabel(hub.cycleEndMode()))) },
                     onOpenDialog = {
                         when (it) {
-                            PlayerDialog.AUDIO_ONLY -> hub.setAudioOnly(!hub.audioOnly)
+                            PlayerDialog.AUDIO_ONLY -> hub.updateAudioOnly(!hub.audioOnly)
                             PlayerDialog.PIP -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 activity?.enterPictureInPictureMode(PipSupport.params(context, hub, false))
                             }
