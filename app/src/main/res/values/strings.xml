@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Drishyopot</string>
+    <string name="app_tagline">A lightweight video client</string>
+
+    <!-- Navigation / common -->
+    <string name="navigate_back">Back</string>
+    <string name="back_again_to_exit">Press Back again to exit</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="working">Working…</string>
+    <string name="operation_failed">Operation failed. Please try again.</string>
+
+    <!-- Home -->
+    <string name="home_settings">Settings</string>
+    <string name="home_settings_summary">Interface, player, gestures, SponsorBlock</string>
+    <string name="home_downloads">Downloads</string>
+    <string name="home_downloads_summary">Download preferences</string>
+    <string name="home_about">About</string>
+    <string name="home_about_summary">Version, cache and diagnostics</string>
+    <string name="roadmap_title">Build progress</string>
+    <string name="roadmap_phase_1">Phase 1 – Foundation, settings, backup, diagnostics</string>
+    <string name="roadmap_phase_2">Phase 2 – Native player and gestures</string>
+    <string name="roadmap_phase_3">Phase 3 – Background play, PiP, mini player, queue</string>
+    <string name="roadmap_phase_4">Phase 4 – SponsorBlock</string>
+    <string name="roadmap_phase_5">Phase 5 – Download manager</string>
+    <string name="roadmap_phase_6">Phase 6 – Browser, ad blocking, voice search</string>
+    <string name="roadmap_phase_7">Phase 7 – Casting</string>
+    <string name="roadmap_done">Done</string>
+    <string name="roadmap_pending">Planned</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="interface_category">Interface</string>
+    <string name="haptic_strength">Haptic strength</string>
+    <string name="haptics_off">Off</string>
+    <string name="display_dislikes">Show dislikes</string>
+    <string name="display_dislikes_summary">Sends video IDs to a third-party dislike API</string>
+    <string name="show_likes">Show exact like counts</string>
+    <string name="hide_shorts">Hide Shorts</string>
+
+    <string name="player">Playback</string>
+    <string name="remember_last_position">Remember position</string>
+    <string name="remember_quality">Remember video quality</string>
+    <string name="remember_playback_speed">Remember speed</string>
+    <string name="remember_resize_mode">Remember resize mode</string>
+    <string name="use_original_title">Use original title</string>
+
+    <string name="gesture">Gestures</string>
+    <string name="enable_in_embedded">In embedded player</string>
+    <string name="enable_in_fullscreen">In fullscreen</string>
+    <string name="gesture_single_tap">Single tap</string>
+    <string name="gesture_double_tap">Double tap</string>
+    <string name="gesture_long_press_speed">Hold for 2×</string>
+    <string name="brightness">Brightness</string>
+    <string name="volume">Volume</string>
+    <string name="gesture_seek">Swipe to seek</string>
+    <string name="gesture_fullscreen_swipe">Enter/exit fullscreen</string>
+
+    <string name="background_mini_player">Background &amp; mini player</string>
+    <string name="pip">Picture-in-picture</string>
+    <string name="in_app_mini_player">In-app mini player</string>
+    <string name="background_play">Background playback</string>
+
+    <string name="sponsorblock">SponsorBlock</string>
+    <string name="skip_sponsors">Skip sponsors</string>
+    <string name="skip_selfpromo">Skip self-promotion</string>
+    <string name="skip_interaction">Skip engagement reminders</string>
+    <string name="skip_intro">Skip intros</string>
+    <string name="skip_outro">Skip outros</string>
+    <string name="skip_preview">Skip previews</string>
+    <string name="skip_music_offtopic">Skip non-music sections</string>
+    <string name="skip_filler">Skip off-topic sections</string>
+    <string name="skip_highlight">Skip highlights</string>
+    <string name="sponsor_countdown">Sponsor skip countdown</string>
+
+    <string name="reset_all_settings">Reset all settings</string>
+    <string name="reset_all_message">Reset all settings to their defaults?</string>
+
+    <!-- Backup -->
+    <string name="settings_backup_restore">Backup &amp; restore</string>
+    <string name="settings_export">Export settings</string>
+    <string name="settings_export_summary">Save current settings to a JSON file</string>
+    <string name="settings_import">Import settings</string>
+    <string name="settings_import_summary">Restore settings from a backup file</string>
+    <string name="settings_import_confirm_title">Import settings?</string>
+    <string name="settings_import_confirm_message">Current settings will be overwritten by the backup.</string>
+    <string name="settings_export_done">Settings exported</string>
+    <string name="settings_export_failed">Could not save settings file</string>
+    <string name="settings_import_done">Settings imported</string>
+    <string name="settings_import_failed">Invalid settings file</string>
+
+    <!-- Downloads settings -->
+    <string name="downloads">Downloads</string>
+    <string name="download_wifi_only">Download over Wi-Fi only</string>
+    <string name="download_connections">Connections</string>
+    <string name="download_manager_soon">The download manager arrives in Phase 5. These preferences are already saved and will apply then.</string>
+
+    <!-- About -->
+    <string name="about">About</string>
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_license_note">Drishyopot is an independent application.</string>
+    <string name="about_clear_cache">Clear cache</string>
+    <string name="about_cache_cleared">Cache cleared</string>
+    <string name="about_save_logs">Save diagnostic logs</string>
+    <string name="about_share_logs">Share diagnostic logs</string>
+    <string name="about_save_done">Diagnostic ZIP file saved</string>
+    <string name="about_save_failed">Could not save diagnostics. Choose another location and try again.</string>
+    <string name="about_share_chooser">Share diagnostics</string>
+
+    <!-- Player -->
+    <string name="close">Close</string>
+    <string name="copy_all">Copy all</string>
+    <string name="reset">Reset</string>
+    <string name="info">Info</string>
+    <string name="quality">Quality</string>
+    <string name="playback_speed">Playback speed</string>
+    <string name="audio_track">Audio track</string>
+    <string name="subtitles">Subtitles</string>
+    <string name="no_subtitles">No subtitles</string>
+    <string name="more_options">More</string>
+    <string name="lock_screen">Lock</string>
+    <string name="unlock_screen">Unlock</string>
+    <string name="action_play">Play</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_fullscreen">Fullscreen</string>
+    <string name="player_live">LIVE</string>
+    <string name="player_error">Could not play this video</string>
+    <string name="retry">Retry</string>
+    <string name="speed_hold_2x">2×</string>
+    <string name="player_quality_auto">Auto</string>
+    <string name="player_audio_default">Default</string>
+    <string name="player_info_title">Title</string>
+    <string name="player_info_id">Source</string>
+    <string name="player_info_type">Type</string>
+    <string name="player_info_duration">Duration</string>
+    <string name="info_type_vod">Video on demand</string>
+    <string name="info_unavailable">Unavailable</string>
+    <string name="info_video_codec">Video codec</string>
+    <string name="info_audio_codec">Audio codec</string>
+    <string name="info_resolution">Resolution</string>
+    <string name="info_bitrate">Video bitrate</string>
+    <string name="info_audio_bitrate">Audio bitrate</string>
+    <string name="info_sample_rate">Sample rate</string>
+    <string name="info_channels">Channels</string>
+    <string name="info_nominal_fps">Media FPS</string>
+    <string name="info_rendered_fps">Rendered FPS · 5 s</string>
+    <string name="info_video_decoder">Video decoder</string>
+    <string name="info_audio_decoder">Audio decoder</string>
+    <string name="info_dropped_frames">Dropped frames / total</string>
+    <string name="info_buffer_state">Playback / buffering</string>
+    <string name="info_buffer_count">Buffers/min: %1$d</string>
+    <string name="info_first_frame">First frame time</string>
+    <string name="info_playback_speed">Playback speed</string>
+    <string name="resize_mode">Resize</string>
+    <string name="resize_fit">Fit</string>
+    <string name="resize_fill">Fill</string>
+    <string name="resize_zoom">Zoom</string>
+    <string name="resize_fixed_width">Fixed width</string>
+    <string name="resize_fixed_height">Fixed height</string>
+    <string name="subtitle_style">Subtitle style</string>
+    <string name="subtitle_style_preview">Subtitle preview</string>
+    <string name="subtitle_style_text_size">Text size</string>
+    <string name="subtitle_style_background">Background</string>
+    <string name="subtitle_background_none">None</string>
+    <string name="subtitle_background_semi">Translucent</string>
+    <string name="subtitle_background_opaque">Solid</string>
+    <string name="subtitle_style_color">Text color</string>
+    <string name="subtitle_style_hex">Hex</string>
+    <string name="subtitle_style_drag_hint">Drag the preview to reposition</string>
+    <string name="subtitle_style_bold">Bold</string>
+    <string name="open_url_hint">Video URL (direct, HLS or DASH)</string>
+    <string name="open_url_play">Play</string>
+
+    <!-- Phase 3 -->
+    <string name="queue">Queue</string>
+    <string name="queue_autoplay">Autoplay</string>
+    <string name="queue_empty">The queue is empty. Add a video URL above.</string>
+    <string name="queue_now_playing">Now playing</string>
+    <string name="queue_remove">Remove</string>
+    <string name="queue_added">Added to queue</string>
+    <string name="queue_already_added">Already in the queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="clear_queue">Clear queue</string>
+    <string name="clear_queue_confirm">Remove every video from the queue?</string>
+    <string name="playback_end_mode">When a video ends</string>
+    <string name="playback_end_next">Play next</string>
+    <string name="playback_end_loop">Loop one</string>
+    <string name="playback_end_pause">Pause at end</string>
+    <string name="playback_end_shuffle">Shuffle</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="audio_only_on">Audio only</string>
+    <string name="audio_only_off">Show video</string>
+    <string name="pip_enter">Picture-in-picture</string>
+    <string name="share">Share</string>
+    <string name="close_player">Close player</string>
+    <string name="action_restore_watch">Open player</string>
+
+    <!-- Phase 4: SponsorBlock -->
+    <string name="sb_category_sponsor">Sponsor</string>
+    <string name="sb_category_selfpromo">Self-promotion</string>
+    <string name="sb_category_interaction">Interaction reminder</string>
+    <string name="sb_category_intro">Intro</string>
+    <string name="sb_category_outro">Outro</string>
+    <string name="sb_category_preview">Preview / recap</string>
+    <string name="sb_category_music">Non-music section</string>
+    <string name="sb_category_filler">Filler</string>
+    <string name="sb_category_highlight">Highlight</string>
+    <string name="sb_segments">SponsorBlock segments</string>
+    <string name="sb_skipping_in">Skipping %1$s in %2$d s</string>
+    <string name="sb_jumping_in">Jumping to %1$s in %2$d s</string>
+    <string name="sb_skip_now">Skip</string>
+    <string name="sb_cancel">Cancel</string>
+    <string name="sb_skipped">Skipped: %1$s</string>
+    <string name="sb_skip_segment">Skip this segment</string>
+    <string name="sb_no_segments">No segments for this video.</string>
+    <string name="sb_status_loading">Loading segments…</string>
+    <string name="sb_status_error">Could not reach SponsorBlock.</string>
+    <string name="sb_status_off">Turn on at least one SponsorBlock category in Settings.</string>
+    <string name="sb_status_no_id">SponsorBlock needs a YouTube video ID, which this item does not have.</string>
+    <string name="sb_video_id_hint">YouTube video ID for SponsorBlock (optional)</string>
+
+    <!-- Phase 6 (player extras) -->
+    <string name="views_count">%1$s views</string>
+    <string name="live_chat">Live chat</string>
+
+    <!-- Phase 6: browser -->
+    <string name="home_browse">Browse YouTube</string>
+    <string name="home_browse_summary">Browser with ad blocking, tabs and voice search</string>
+    <string name="browser_reload">Reload</string>
+    <string name="browser_tabs">Tabs</string>
+    <string name="browser_new_tab">New tab</string>
+    <string name="browser_close_tab">Close tab</string>
+    <string name="browser_home">Home page</string>
+    <string name="browser_copy_link">Copy link</string>
+    <string name="browser_open_external">Open in another browser</string>
+    <string name="browser_address">Address or search</string>
+    <string name="browser_address_hint">Link, website or search words</string>
+    <string name="browser_go">Go</string>
+    <string name="voice_search">Voice search</string>
+    <string name="voice_prompt">Say what to search for</string>
+    <string name="voice_unavailable">Voice search is not available on this device</string>
+    <string name="image_save">Save image</string>
+    <string name="image_share">Share image</string>
+    <string name="image_saved">Image saved</string>
+    <string name="image_save_failed">Could not save the image</string>
+    <string name="image_load_failed">Could not load the image</string>
+
+    <!-- Phase 7: Cast -->
+    <string name="cast">Cast</string>
+    <string name="cast_section_devices">Available devices</string>
+    <string name="cast_searching">Searching for devices…</string>
+    <string name="cast_no_devices">No Cast devices found</string>
+    <string name="cast_no_devices_hint">Connect this phone and the Cast device to the same Wi-Fi network. Some routers block devices from seeing each other.</string>
+    <string name="cast_security_note">The identity of Cast devices is not verified. Use this only on networks you trust.</string>
+    <string name="cast_section_link">Open on any device</string>
+    <string name="cast_link_hint">Create a link that plays this video in the browser of any device on the same Wi-Fi.</string>
+    <string name="cast_link_create">Create link</string>
+    <string name="cast_link_waiting">Waiting for a device to open the link…</string>
+    <string name="cast_link_connected">Link opened in a browser</string>
+    <string name="cast_link_close">Close link</string>
+    <string name="cast_learn">Learn about casting</string>
+    <string name="cast_connecting">Connecting…</string>
+    <string name="casting_to">Casting to %1$s</string>
+    <string name="cast_stop">Stop casting</string>
+    <string name="cast_volume">Volume</string>
+    <string name="cast_failed">Casting failed. Check that the device is on the same network and try again.</string>
+    <string name="cast_no_stream">No playable stream found for casting.</string>
+    <string name="cast_no_wifi">Connect to a Wi-Fi network first.</string>
+    <string name="info_state_cast">Casting to</string>
+
+    <!-- Phase 5: downloads -->
+    <string name="dl_channel_progress">Download progress</string>
+    <string name="dl_channel_done">Finished downloads</string>
+    <string name="dl_notif_done">Download finished</string>
+    <string name="dl_notif_failed">Download failed: %1$s</string>
+    <string name="dl_notif_waiting">Waiting for network…</string>
+    <string name="dl_notif_merging">Combining video and audio…</string>
+    <plurals name="dl_notif_title">
+        <item quantity="one">Downloading %d file</item>
+        <item quantity="other">Downloading %d files</item>
+    </plurals>
+    <string name="dl_pause_all">Pause all</string>
+    <string name="dl_resume_all">Resume all</string>
+    <string name="dl_cancel_all">Cancel all</string>
+    <string name="dl_clear_completed">Clear completed</string>
+    <string name="dl_download">Download</string>
+    <string name="dl_title">Download</string>
+    <string name="dl_loading">Loading video details…</string>
+    <string name="dl_added">Added to downloads</string>
+    <string name="dl_only_youtube">Downloading works for YouTube videos and playlists.</string>
+    <string name="dl_mode_video">Video</string>
+    <string name="dl_mode_audio">Audio only</string>
+    <string name="dl_codec">Codec</string>
+    <string name="dl_codec_auto">Auto</string>
+    <string name="dl_subtitles">Subtitles to save</string>
+    <string name="dl_include_cover">Also save the cover image</string>
+    <string name="dl_file_name">File name</string>
+    <string name="dl_estimated_size">Estimated size: %1$s</string>
+    <string name="dl_start">Download</string>
+    <string name="dl_selected_count">%1$d of %2$d selected</string>
+    <string name="dl_select_all">All</string>
+    <string name="dl_select_none">None</string>
+    <string name="dl_playlist_truncated">Only the first %1$d videos of this playlist can be downloaded at once.</string>
+    <string name="dl_max_quality">Highest quality</string>
+    <string name="dl_subtitle_codes">Subtitle languages (e.g. en, bn)</string>
+    <string name="dl_filter_all">All</string>
+    <string name="dl_filter_progress">In progress</string>
+    <string name="dl_filter_done">Completed</string>
+    <string name="dl_banner_offline">No internet connection. Downloads continue when it returns.</string>
+    <string name="dl_banner_wifi">Waiting for Wi-Fi. Change this in Settings → Downloads.</string>
+    <string name="dl_empty">No downloads yet.</string>
+    <string name="dl_eta">%1$s left</string>
+    <string name="dl_pause">Pause</string>
+    <string name="dl_resume">Resume</string>
+    <string name="dl_remove">Remove from list</string>
+    <string name="dl_delete">Delete</string>
+    <string name="dl_delete_file">Delete file too</string>
+    <string name="dl_file_missing">The file was moved or deleted.</string>
+    <string name="dl_status_queued">Queued</string>
+    <string name="dl_status_running">Downloading</string>
+    <string name="dl_status_waiting">Waiting for network</string>
+    <string name="dl_status_paused">Paused</string>
+    <string name="dl_status_merging">Combining video and audio…</string>
+    <string name="dl_status_done">Completed</string>
+    <string name="dl_status_failed">Failed</string>
+    <string name="dl_err_live">Live streams cannot be downloaded.</string>
+    <string name="dl_err_premiere">This video is a premiere that has not been released yet.</string>
+    <string name="dl_err_403">YouTube refused the download (403). Update the app and try again.</string>
+    <string name="dl_err_429">Too many requests (429). Wait a while, then retry.</string>
+    <string name="dl_err_storage">Not enough storage space.</string>
+    <string name="dl_err_memory">The device ran out of memory.</string>
+    <string name="dl_err_network">The connection failed. Check your network and retry.</string>
+    <string name="dl_err_no_stream">No downloadable stream was found.</string>
+    <string name="dl_err_merge">Could not combine video and audio. Try another codec.</string>
+    <string name="dl_err_verify">The downloaded file failed the integrity check. Retry the download.</string>
+    <string name="dl_err_other">The download failed.</string>
+    <string name="dl_err_resolve">Could not load this video. Check the link and your connection.</string>
+    <string name="share_choice_title">What do you want to do with this link?</string>
+    <string name="about_check_updates">Check for updates</string>
+    <string name="about_update_failed">Could not check for updates.</string>
+    <string name="about_update_available">New version available: %1$s</string>
+    <string name="about_up_to_date">You have the latest version.</string>
+</resources>
