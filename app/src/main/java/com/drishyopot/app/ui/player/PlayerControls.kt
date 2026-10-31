@@ -160,26 +160,22 @@ fun PlayerControls(
                     Icon(Icons.Filled.MoreVert, stringResource(R.string.more_options), tint = Color.White)
                 }
                 DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                    val base: List<Pair<PlayerDialog, Int>> = listOf(
-                        PlayerDialog.QUALITY to R.string.quality,
-                        PlayerDialog.SPEED to R.string.playback_speed,
-                        PlayerDialog.AUDIO to R.string.audio_track,
-                        PlayerDialog.SUBTITLES to R.string.subtitles,
-                        PlayerDialog.SUBTITLE_STYLE to R.string.subtitle_style,
-                        PlayerDialog.SPONSOR_SEGMENTS to R.string.sb_segments,
-                        PlayerDialog.RESIZE to R.string.resize_mode,
-                        PlayerDialog.AUDIO_ONLY to (if (model.audioOnly) R.string.audio_only_off else R.string.audio_only_on),
-                        PlayerDialog.SHARE to R.string.share,
-                        PlayerDialog.DOWNLOAD to R.string.dl_download,
-                        PlayerDialog.INFO to R.string.info,
-                        PlayerDialog.CLOSE_PLAYER to R.string.close_player,
-                    )
-                    val entries: List<Pair<PlayerDialog, Int>> =
-                        if (model.pipAvailable) {
-                            base.dropLast(1) + (PlayerDialog.PIP to R.string.pip_enter) + base.last()
-                        } else {
-                            base
-                        }
+                    val entries = mutableListOf<Pair<PlayerDialog, Int>>()
+                    entries.add(PlayerDialog.QUALITY to R.string.quality)
+                    entries.add(PlayerDialog.SPEED to R.string.playback_speed)
+                    entries.add(PlayerDialog.AUDIO to R.string.audio_track)
+                    entries.add(PlayerDialog.SUBTITLES to R.string.subtitles)
+                    entries.add(PlayerDialog.SUBTITLE_STYLE to R.string.subtitle_style)
+                    entries.add(PlayerDialog.SPONSOR_SEGMENTS to R.string.sb_segments)
+                    entries.add(PlayerDialog.RESIZE to R.string.resize_mode)
+                    entries.add(PlayerDialog.AUDIO_ONLY to (if (model.audioOnly) R.string.audio_only_off else R.string.audio_only_on))
+                    entries.add(PlayerDialog.SHARE to R.string.share)
+                    entries.add(PlayerDialog.DOWNLOAD to R.string.dl_download)
+                    entries.add(PlayerDialog.INFO to R.string.info)
+                    if (model.pipAvailable) {
+                        entries.add(PlayerDialog.PIP to R.string.pip_enter)
+                    }
+                    entries.add(PlayerDialog.CLOSE_PLAYER to R.string.close_player)
                     entries.forEach { (dialog, label) ->
                         DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { menuOpen = false; onOpenDialog(dialog) })
                     }
