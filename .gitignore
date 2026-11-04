@@ -1,0 +1,14 @@
+*.iml
+*.pem
+.DS_Store
+.cxx
+.externalNativeBuild
+.gradle/
+/.idea/
+/app/build/
+/build/
+/captures
+/local.properties
+node_modules/
+ota-out/
+ota-private.pem

@@ -1,0 +1,23 @@
+{
+  "assets": [
+    {
+      "file": "potoken-7.html",
+      "name": "potoken.html",
+      "sha256": "af027f5ab8b9f2eeaecd62e7e80b38457071105865263f7964d20572680d03a2"
+    },
+    {
+      "file": "inject-7.js",
+      "name": "inject.js",
+      "sha256": "7794c1095234fb1f64f1ec3a690f29fc41ec63ab0d5a64058eecec719daf1e13"
+    }
+  ],
+  "engine": {
+    "file": "engine-7.jar",
+    "sha256": "611d189adff6a2c5c817c63a45592118576b86fcd65da95bbe450c0f544875bd",
+    "version": "NewPipe Extractor v0.26.5"
+  },
+  "engineApi": 1,
+  "notes": "test",
+  "schema": 1,
+  "sequence": 7
+}

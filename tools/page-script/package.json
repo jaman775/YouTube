@@ -1,0 +1,1 @@
+{ "name": "drishyopot-page-script-tests", "private": true, "type": "module", "scripts": { "test": "node test.mjs && node speech.test.mjs" }, "devDependencies": { "jsdom": "26.1.0" } }

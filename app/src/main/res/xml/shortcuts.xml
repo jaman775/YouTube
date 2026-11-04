@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="downloads"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/downloads">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.drishyopot.app.MainActivity"
+            android:targetPackage="com.drishyopot.app">
+            <extra android:name="route" android:value="downloads" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="settings"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/home_settings">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.drishyopot.app.MainActivity"
+            android:targetPackage="com.drishyopot.app">
+            <extra android:name="route" android:value="settings" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="account"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/settings_account">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.drishyopot.app.MainActivity"
+            android:targetPackage="com.drishyopot.app">
+            <extra android:name="route" android:value="settings/account" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="engine"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/settings_engine">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.drishyopot.app.MainActivity"
+            android:targetPackage="com.drishyopot.app">
+            <extra android:name="route" android:value="settings/engine" />
+        </intent>
+    </shortcut>
+</shortcuts>

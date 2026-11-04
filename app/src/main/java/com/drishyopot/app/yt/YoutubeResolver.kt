@@ -1,0 +1,222 @@
+package com.drishyopot.app.yt
+
+import android.media.MediaCodecList
+import com.drishyopot.app.diagnostics.DiagnosticLog
+import com.drishyopot.app.engine.EngineHost
+import com.drishyopot.engine.api.EngineException
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.concurrent.ConcurrentHashMap
+
+/**
+ * Turns a YouTube video ID into playable stream URLs. The extraction itself happens in the engine
+ * (see [EngineHost]), which can be updated online; this object caches results and chooses streams.
+ * All calls block.
+ */
+object YoutubeResolver {
+    private const val CACHE_TTL_MS = 4 * 60 * 60 * 1000L
+    private val cache = ConcurrentHashMap<String, YtVideo>()
+
+    /** Forget what is cached for [id] so the next call asks the engine again. */
+    fun invalidate(id: String) { cache.remove(id) }
+
+    fun cached(id: String): YtVideo? = cache[id]?.takeIf { System.currentTimeMillis() - it.resolvedAt < CACHE_TTL_MS }
+
+    fun resolve(id: String, forceRefresh: Boolean = false): YtVideo {
+        if (!forceRefresh) cached(id)?.let { return it }
+        try {
+            val json = EngineHost.call { it.resolveVideo(id) }
+            val video = parseVideo(json)
+            cache[id] = video
+            return video
+        } catch (e: EngineException) {
+            DiagnosticLog.log("Resolver", "Resolve failed for $id (${e.kind})", e)
+            throw YoutubeException(e.message ?: e.kind, e.kind, e)
+        } catch (e: JSONException) {
+            DiagnosticLog.log("Resolver", "Engine returned unreadable data for $id", e)
+            throw YoutubeException("The engine returned unreadable data", EngineException.OTHER, e)
+        }
+    }
+
+    /** Loads up to [maxItems] entries of a playlist, following pagination. */
+    fun playlist(url: String, maxItems: Int = 200): YtPlaylist {
+        try {
+            return parsePlaylist(EngineHost.call { it.loadPlaylist(url, maxItems) })
+        } catch (e: EngineException) {
+            DiagnosticLog.log("Resolver", "Playlist failed for $url (${e.kind})", e)
+            throw YoutubeException(e.message ?: e.kind, e.kind, e)
+        } catch (e: JSONException) {
+            throw YoutubeException("The engine returned unreadable data", EngineException.OTHER, e)
+        }
+    }
+
+    // ---- JSON from the engine ---------------------------------------------------------------------------
+
+    fun parseVideo(json: String): YtVideo {
+        val o = JSONObject(json)
+        fun optString(obj: JSONObject, key: String): String? = if (obj.isNull(key)) null else obj.getString(key)
+        fun ranges(obj: JSONObject): MediaRanges {
+            val a = obj.optJSONArray("ranges") ?: return MediaRanges()
+            if (a.length() < 4) return MediaRanges()
+            return MediaRanges(a.getLong(0), a.getLong(1), a.getLong(2), a.getLong(3))
+        }
+        fun video(arr: JSONArray?, videoOnly: Boolean) = (0 until (arr?.length() ?: 0)).map { i ->
+            val s = arr!!.getJSONObject(i)
+            YtVideoStream(
+                url = s.getString("url"), height = s.optInt("height"), fps = s.optInt("fps"),
+                codec = optString(s, "codec"), bitrate = s.optInt("bitrate"), videoOnly = videoOnly,
+                width = s.optInt("width"), mimeType = s.optString("mime", "video/mp4"), ranges = ranges(s),
+                contentLength = s.optLong("contentLength"),
+            )
+        }
+        val audioArr = o.optJSONArray("audio")
+        val subsArr = o.optJSONArray("subtitles")
+        return YtVideo(
+            id = o.getString("id"),
+            title = o.optString("title"),
+            uploader = o.optString("uploader"),
+            durationMs = o.optLong("durationMs"),
+            isLive = o.optBoolean("live"),
+            thumbnail = optString(o, "thumbnail"),
+            videoOnly = video(o.optJSONArray("videoOnly"), true),
+            muxed = video(o.optJSONArray("muxed"), false),
+            audio = (0 until (audioArr?.length() ?: 0)).map { i ->
+                val a = audioArr!!.getJSONObject(i)
+                YtAudioStream(
+                    url = a.getString("url"), trackId = optString(a, "trackId"), label = a.optString("label", "Default"),
+                    kind = runCatching { AudioKind.valueOf(a.optString("kind")) }.getOrDefault(AudioKind.OTHER),
+                    language = optString(a, "language"), bitrate = a.optInt("bitrate"), codec = optString(a, "codec"),
+                    mimeType = a.optString("mime", "audio/mp4"), ranges = ranges(a),
+                    contentLength = a.optLong("contentLength"),
+                )
+            },
+            subtitles = (0 until (subsArr?.length() ?: 0)).map { i ->
+                val t = subsArr!!.getJSONObject(i)
+                YtSubtitle(
+                    url = t.getString("url"), language = t.optString("language", "und"), label = t.optString("label"),
+                    mimeType = t.optString("mime", "text/vtt"), autoGenerated = t.optBoolean("auto"),
+                )
+            },
+            hlsUrl = optString(o, "hlsUrl")?.takeIf { it.isNotBlank() },
+            uploaderAvatar = optString(o, "uploaderAvatar")?.takeIf { it.isNotBlank() },
+            uploaderUrl = optString(o, "uploaderUrl")?.takeIf { it.isNotBlank() },
+            subscribers = o.optLong("subscribers", -1),
+            uploadedAtMs = o.optLong("uploadedAt", 0),
+            description = descriptionText(o.optString("description"), o.optBoolean("descriptionHtml")),
+            likeCount = o.optLong("likes", -1),
+            viewCount = o.optLong("views", -1),
+            chapters = o.optJSONArray("chapters")?.let { arr ->
+                (0 until arr.length()).map { i ->
+                    val c = arr.getJSONObject(i)
+                    YtChapter(c.optString("title"), c.optLong("startSec") * 1000L, optString(c, "preview"))
+                }
+            } ?: emptyList(),
+            related = o.optJSONArray("related")?.let { arr ->
+                (0 until arr.length()).map { i ->
+                    val r = arr.getJSONObject(i)
+                    YtRelated(
+                        id = r.getString("id"), title = r.optString("title"), uploader = r.optString("uploader"),
+                        durationSec = r.optLong("durationSec"), views = r.optLong("views", -1), date = r.optString("date"),
+                        thumbnail = optString(r, "thumbnail"),
+                    )
+                }
+            } ?: emptyList(),
+        )
+    }
+
+    private fun descriptionText(raw: String, html: Boolean): String =
+        if (html && raw.isNotEmpty()) androidx.core.text.HtmlCompat.fromHtml(raw, androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT).toString().trim() else raw
+
+    fun parseComments(json: String): YtComments {
+        val o = JSONObject(json)
+        val arr = o.optJSONArray("items")
+        return YtComments(
+            disabled = o.optBoolean("disabled"),
+            count = o.optLong("count", -1),
+            items = (0 until (arr?.length() ?: 0)).map { i ->
+                val c = arr!!.getJSONObject(i)
+                YtComment(
+                    author = c.optString("author"),
+                    avatar = if (c.isNull("avatar")) null else c.optString("avatar"),
+                    text = c.optString("text"), likes = c.optLong("likes"), date = c.optString("date"), pinned = c.optBoolean("pinned"),
+                )
+            },
+        )
+    }
+
+    /** Blocking. Null when the engine cannot read comments for this video. */
+    fun comments(videoId: String): YtComments? = try {
+        parseComments(EngineHost.call { it.comments(videoId, 40) })
+    } catch (_: Exception) { null }
+
+    fun parsePlaylist(json: String): YtPlaylist {
+        val o = JSONObject(json)
+        val arr = o.optJSONArray("items")
+        return YtPlaylist(
+            title = o.optString("title"),
+            items = (0 until (arr?.length() ?: 0)).map { i ->
+                val it = arr!!.getJSONObject(i)
+                YtPlaylistItem(it.getString("id"), it.optString("title"), it.optString("uploader"), it.optLong("durationSec"))
+            },
+            truncated = o.optBoolean("truncated"),
+        )
+    }
+
+    // ---- Stream picking -----------------------------------------------------------------
+
+    private const val AUTO_MAX_HEIGHT = 1080
+    private val codecPreference = listOf("avc", "vp9", "av1", "hevc", "other")
+
+    private val decoderMimes: Set<String> by lazy {
+        try {
+            MediaCodecList(MediaCodecList.REGULAR_CODECS).codecInfos
+                .filter { !it.isEncoder }.flatMap { it.supportedTypes.toList() }.map { it.lowercase() }.toSet()
+        } catch (_: Exception) { emptySet() }
+    }
+
+    private fun decodable(stream: YtVideoStream): Boolean {
+        val mime = when (stream.family) {
+            "avc" -> "video/avc"
+            "vp9" -> "video/x-vnd.on2.vp9"
+            "av1" -> "video/av01"
+            "hevc" -> "video/hevc"
+            else -> return true
+        }
+        return decoderMimes.isEmpty() || mime in decoderMimes
+    }
+
+    fun availableHeights(video: YtVideo): List<Int> =
+        (video.videoOnly + video.muxed).filter { decodable(it) && it.height > 0 }.map { it.height }.distinct().sortedDescending()
+
+    /** Best stream for [height] (0 = auto, capped at 1080p), preferring widely supported codecs. */
+    fun pickVideo(video: YtVideo, height: Int): YtVideoStream? {
+        val usable = video.videoOnly.filter { decodable(it) && it.height > 0 }
+        val target = if (height > 0) height else {
+            usable.map { it.height }.filter { it <= AUTO_MAX_HEIGHT }.maxOrNull() ?: usable.maxOfOrNull { it.height } ?: 0
+        }
+        val atHeight = usable.filter { it.height == target }
+        val choice = atHeight.sortedWith(
+            compareBy<YtVideoStream> { codecPreference.indexOf(it.family).let { i -> if (i < 0) 99 else i } }
+                .thenByDescending { it.fps }.thenByDescending { it.bitrate },
+        ).firstOrNull()
+        return choice ?: usable.minByOrNull { kotlin.math.abs(it.height - target) }
+    }
+
+    fun pickMuxed(video: YtVideo, height: Int): YtVideoStream? =
+        video.muxed.filter { decodable(it) }.let { list ->
+            if (height > 0) list.minByOrNull { kotlin.math.abs(it.height - height) } else list.maxByOrNull { it.height }
+        }
+
+    /** One entry per distinct audio track (language/type), best bitrate each. */
+    fun audioTracks(video: YtVideo): List<YtAudioStream> =
+        video.audio.groupBy { it.trackId ?: "default" }
+            .map { (_, group) -> group.maxByOrNull { it.bitrate }!! }
+            .sortedWith(compareBy({ it.kind != AudioKind.ORIGINAL }, { it.label }))
+
+    fun pickAudio(video: YtVideo, trackId: String?): YtAudioStream? {
+        val tracks = audioTracks(video)
+        if (tracks.isEmpty()) return null
+        return tracks.firstOrNull { trackId != null && (it.trackId ?: "default") == trackId } ?: tracks.first()
+    }
+}

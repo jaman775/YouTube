@@ -1,0 +1,17 @@
+{
+  "name": "drishyopot-potoken",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Builds the PO-token page that Drishyopot runs in a hidden WebView.",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node test/potoken.test.mjs"
+  },
+  "dependencies": {
+    "bgutils-js": "4.0.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.5"
+  }
+}

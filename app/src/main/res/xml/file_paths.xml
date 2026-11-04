@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="diagnostics" path="diagnostics/" />
+    <cache-path name="images" path="images/" />
+    <external-files-path name="downloads" path="." />
+</paths>
